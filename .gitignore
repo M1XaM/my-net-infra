@@ -1,0 +1,13 @@
+# Ignore all certificate and key files
+**/*.crt
+**/*.csr
+**/*.key
+**/*.pem
+**/*.pfx
+**/*.der
+
+# Optional: ignore OpenSSL config files (sometimes contain sensitive info)
+**/*.cnf
+
+# Ignore log files
+*.log
