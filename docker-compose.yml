@@ -5,9 +5,6 @@ services:
       POSTGRES_DB: chatdb
       POSTGRES_USER: chat_user
       POSTGRES_PASSWORD: chat_password
-      POSTGRES_SSL: on
-      POSTGRES_SSL_CERT: /var/lib/postgresql/certs/server.crt
-      POSTGRES_SSL_KEY: /var/lib/postgresql/certs/server.key
     ports:
       - "5432:5432"
     expose:
