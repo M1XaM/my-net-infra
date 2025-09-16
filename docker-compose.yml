@@ -5,15 +5,14 @@ services:
       POSTGRES_DB: chatdb
       POSTGRES_USER: chat_user
       POSTGRES_PASSWORD: chat_password
-      POSTGRES_SSL: on
-      POSTGRES_SSL_CERT: /var/lib/postgresql/certs/server.crt
-      POSTGRES_SSL_KEY: /var/lib/postgresql/certs/server.key
     ports:
+      - "5432:5432"
+    expose:
       - "5432:5432"
 
   backend:
     build: ../my-net-server
-    ports:
+    expose:
       - "5000:5000"
     environment:
       DB_HOST: db
@@ -26,7 +25,16 @@ services:
 
   frontend:
     build: ../my-net-client
-    ports:
+    expose:
       - "5173:5173"
     depends_on:
       - backend
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
