@@ -7,8 +7,8 @@ from config import settings
 
 def generate_google_oauth_redirect_uri(): # here is all data for info \
     #https://developers.google.com/identity/protocols/oauth2/web-server?hl=ru#python_1
-    # random_state = secrets.token_urlsafe(16)
-    # state_storage.add(random_state)
+    random_state = secrets.token_urlsafe(16)
+    state_storage.add(random_state)
 
     query_params = { ## всё берёться отсюда :
         "client_id": settings.OAUTH_GOOGLE_CLIENT_ID,
@@ -22,7 +22,7 @@ def generate_google_oauth_redirect_uri(): # here is all data for info \
             "email",
         ]),
         "access_type": "offline", ## refresh token to use disk of user ()
-       # "state": random_state, ## state is for security
+        "state": random_state, ## state is for security
     }
     ## delaet is dicta query
     query_string = urllib.parse.urlencode(query_params, quote_via=urllib.parse.quote)
