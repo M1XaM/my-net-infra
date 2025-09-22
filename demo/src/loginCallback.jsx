@@ -27,7 +27,7 @@ export default function GoogleCallback() {
         .then(data => {
           console.log(data)
           setPicUrl(data.user.picture);
-          // setUserName(data.email);
+          setFileNames(data.files);
 
           setUserName(data.user.name);
         })
@@ -55,16 +55,16 @@ export default function GoogleCallback() {
           />
         </div>
       )}
-      {/*{fileNames.length > 0 && (*/}
-      {/*  <div style={{ marginTop: "30px" }}>*/}
-      {/*    <h3>Ваши файлы в Google Drive:</h3>*/}
-      {/*    <ul>*/}
-      {/*      {fileNames.map(file => (*/}
-      {/*        <li key={file}>{file}</li>*/}
-      {/*      ))}*/}
-      {/*    </ul>*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {fileNames.length > 0 && (
+        <div style={{ marginTop: "30px" }}>
+          <h3>Ваши файлы в Google Drive:</h3>
+          <ul>
+            {fileNames.map(file => (
+              <li key={file}>{file}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

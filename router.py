@@ -53,22 +53,29 @@ async def handle_code(
                 options={"verify_signature": False},
             )
 
-    # async with aiohttp.ClientSession() as session:
-    #     async with session.get(
-    #         url="https://www.googleapis.com/drive/v3/files",
-    #         headers={
-    #             "Authorization": f"Bearer {access_token}"
-    #         },
-    #         ssl=False,
-    #     ) as response:
-    #         res = await response.json()
-    #         print(f"{res=}")
-    #         files = [item["name"] for item in res["files"]]
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            url="https://www.googleapis.com/drive/v3/files",
+            headers={
+                "Authorization": f"Bearer {access_token}"
+            },
+            ssl=False,
+        ) as response:
+            res = await response.json()
+            # print(f"{res=}")
+            files = [item["name"] for item in res["files"]]
+            print(files)
 
     return {
         "user": user_data,
-        # "files": files,
+        "files": files,
     }
 
     #id token == jwt token
     ## coding rs256
+
+## link for google drive - https://developers.google.com/workspace/drive/api/reference/rest/v3?hl=ru
+
+## link to enable it https://console.cloud.google.com/apis/library/drive.googleapis.com?project=upbeat-glow-472220-f1
+
+## link to client https://console.cloud.google.com/auth/audience?project=upbeat-glow-472220-f1
