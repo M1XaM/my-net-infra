@@ -15,7 +15,7 @@ export default function GoogleCallback() {
     console.log(state)
     console.log(code)
     if (code && state) {
-      fetch("http://localhost:8000/auth/google/callback", {
+      fetch("http://localhost:8000/auth/google/callback", {  //
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, state }),

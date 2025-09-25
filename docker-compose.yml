@@ -13,7 +13,7 @@ services:
   backend:
     build: ../my-net-server
     expose:
-      - "8000:8000"
+      - "5000:5000"
     environment:
       DB_HOST: db
       DB_NAME: chatdb
@@ -26,7 +26,7 @@ services:
   frontend:
     build: ../my-net-client
     expose:
-      - "3000:3000"
+      - "5173:5173"
     depends_on:
       - backend
 
