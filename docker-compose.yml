@@ -5,10 +5,29 @@ services:
       POSTGRES_DB: chatdb
       POSTGRES_USER: chat_user
       POSTGRES_PASSWORD: chat_password
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     expose:
       - "5432:5432"
+
+  db-standby:
+    build: ./db-standby
+    environment:
+      POSTGRES_DB: chatdb
+      POSTGRES_USER: chat_user
+      POSTGRES_PASSWORD: chat_password
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PRIMARY_HOST: db
+      PRIMARY_PORT: 5432
+      REPLICATION_USER: repl_user
+      REPLICATION_PASSWORD: repl_password
+    ports:
+      - "5433:5432"
+    expose:
+      - "5432:5432"
+    depends_on:
+      - db
 
   backend:
     build: ../my-net-server
@@ -19,7 +38,7 @@ services:
       DB_NAME: chatdb
       DB_USER: chat_user
       DB_PASSWORD: chat_password
-      APP_ENCRYPTION_KEY: "33B2Akj9EVW-C4_9Ut9uHTsi-iA8Tr3H5sE3lEkapmw="
+      DB_ENCRYPTION_KEY: "33B2Akj9EVW-C4_9Ut9uHTsi-iA8Tr3H5sE3lEkapmw="
     depends_on:
       - db
 
