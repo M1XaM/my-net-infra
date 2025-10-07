@@ -12,7 +12,8 @@ RUN chown -R postgres:postgres /var/lib/postgresql/certs && \
     chmod 600 /var/lib/postgresql/certs/server.key
 
 COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY health_check.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/health_check.sh
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["postgres"]
