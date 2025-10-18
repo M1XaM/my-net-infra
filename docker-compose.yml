@@ -39,6 +39,7 @@ services:
       DB_USER: chat_user
       DB_PASSWORD: chat_password
       DB_ENCRYPTION_KEY: "33B2Akj9EVW-C4_9Ut9uHTsi-iA8Tr3H5sE3lEkapmw="
+      JWT_SECRET_KEY: "2281337322"
     depends_on:
       - db
 
