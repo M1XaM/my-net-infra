@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   db:
     build: ./db
@@ -9,7 +11,9 @@ services:
     ports:
       - "5432:5432"
     expose:
-      - "5432:5432"
+      - "5432"
+    networks:
+      - main-net
 
   db-standby:
     build: ./db-standby
@@ -25,14 +29,16 @@ services:
     ports:
       - "5433:5432"
     expose:
-      - "5432:5432"
+      - "5432"
     depends_on:
       - db
+    networks:
+      - main-net
 
   backend:
     build: ../my-net-server
     expose:
-      - "5000:5000"
+      - "5000"
     environment:
       DB_HOST: db
       DB_NAME: chatdb
@@ -42,13 +48,28 @@ services:
       JWT_SECRET_KEY: "2281337322"
     depends_on:
       - db
+    networks:
+      - main-net
+      - runner-net
+
+  runner:
+    build: ../my-net-server/runner
+    expose:
+      - "8080"
+    depends_on:
+      - backend
+    networks:
+      - runner-net
 
   frontend:
     build: ../my-net-client
     expose:
-      - "5173:5173"
+      - "5173"
     depends_on:
       - backend
+      - runner
+    networks:
+      - main-net
 
   nginx:
     build: ./nginx
@@ -58,3 +79,12 @@ services:
     depends_on:
       - backend
       - frontend
+    networks:
+      - main-net
+
+networks:
+  main-net:
+    driver: bridge
+  runner-net:
+    driver: bridge
+    internal: true
