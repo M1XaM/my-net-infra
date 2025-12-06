@@ -33,17 +33,19 @@ services:
     networks:
       - main-net
 
-  backend:
-    build: ../my-net-server
+  chat:
+    build: ../my-net-server/chat
     expose:
       - "5000"
     environment:
+      PORT: 5000
       DB_HOST: db
       DB_NAME: chatdb
       DB_USER: chat_user
       DB_PASSWORD: chat_password
       DB_ENCRYPTION_KEY: "33B2Akj9EVW-C4_9Ut9uHTsi-iA8Tr3H5sE3lEkapmw="
       JWT_SECRET_KEY: "2281337322"
+      WORKERS: 4
     depends_on:
       - db
     networks:
@@ -58,7 +60,7 @@ services:
       TIMEOUT: "10"
       STATIC_CHECK: "true"
     depends_on:
-      - backend
+      - chat
     networks:
       - runner-net
     deploy:
@@ -67,12 +69,12 @@ services:
           cpus: '0.5'
           memory: 256M
 
-  frontend:
+  client:
     build: ../my-net-client
     expose:
       - "5173"
     depends_on:
-      - backend
+      - chat
       - runner
     networks:
       - main-net
@@ -83,8 +85,8 @@ services:
       - "443:443"
       - "80:80"
     depends_on:
-      - backend
-      - frontend
+      - chat
+      - client
     networks:
       - main-net
 
