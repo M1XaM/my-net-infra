@@ -2,7 +2,7 @@ FROM nginx:stable-alpine
 
 RUN apk add --no-cache openssl bash
 
-RUN mkdir -p /etc/nginx/certs /etc/nginx/conf.d
+RUN mkdir -p /etc/nginx/certs /etc/nginx/conf.d /etc/nginx/static
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/certs/server.key \
@@ -10,5 +10,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=localhost"
 
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY robots.txt /etc/nginx/static/robots.txt
 
 EXPOSE 80 443
