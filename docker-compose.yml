@@ -46,6 +46,8 @@ services:
       DB_ENCRYPTION_KEY: "33B2Akj9EVW-C4_9Ut9uHTsi-iA8Tr3H5sE3lEkapmw="
       JWT_SECRET_KEY: "2281337322"
       WORKERS: 4
+      PYTHONUNBUFFERED: "1"
+      CORS_ALLOWED_ORIGINS: "https://localhost"  # for prod use domain name
     depends_on:
       - db
     networks:
